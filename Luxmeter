@@ -1,0 +1,35 @@
+void light() {
+  int   ldrRawData;
+  float resistorVoltage, ldrVoltage;
+  float ldrResistance;
+  float ldrLux;
+  
+  // Perform the analog to digital conversion  
+  ldrRawData = analogRead(LDR_PIN);
+  
+  // RESISTOR VOLTAGE_CONVERSION
+  // Convert the raw digital data back to the voltage that was measured on the analog pin
+  resistorVoltage = (float)ldrRawData / Max_adc_reading * ADC_ref_voltage;
+
+  // voltage across the LDR is the 5V supply minus the resistor voltage
+  ldrVoltage = ADC_ref_voltage - resistorVoltage;
+  
+  // LDR_RESISTANCE_CONVERSION
+  // resistance that the LDR would have for that voltage  
+  ldrResistance = ldrVoltage/resistorVoltage * Ref_resistance;
+  
+  // LDR_LUX
+  // Change the code below to the proper conversion from ldrResistance to
+  // ldrLux
+  ldrLux = Lux_calc_scalar * pow(ldrResistance, Lux_calc_exponent);
+
+  
+  client.publish(brightness_topic, String(ldrLux).c_str(), true);
+
+  if (brightness < 100) {
+    
+    Serial.println("going to deep sleep for 20 minutes, bye");
+    ESP.deepSleep(1200e6); // 20 minutes 
+  }
+
+}
