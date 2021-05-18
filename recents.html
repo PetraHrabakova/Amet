@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+         td {
+                width: 150px;
+                text-align: center;
+                border: 1px solid black;
+                padding: 5px;
+              }
+    </style>
+
+</head>
+    <body>
+        <h2>Here are our pretty little measurements:</h2>
+
+        <table>
+            <thead>
+                <tr>
+
+                    <th>ID</th>
+                    <th>Temperature</th>
+                    <th>Humidity</th>
+                    <th>Brightness</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                    {% if row[1] < 18 %}
+                        <td style = "background-color: red"> {{ row[1] }}</td>
+                    {% else %}
+                        <td style ="background-color: limegreen"> {{ row[1] }}</td>
+                    {% endif %}
+
+                    {% if row[2] > 80 %}
+                        <td style = "background-color: red"> {{ row[2] }}</td>
+                    {% else %}
+                        <td style ="background-color: limegreen"> {{ row[2] }}</td>
+                    {% endif %}
+
+                    {% if row[3] < 20 %}
+                        <td style = "background-color: red"> {{ row[3] }}</td>
+                    {% else %}
+                        <td style ="background-color: limegreen"> {{ row[3] }}</td>
+                    {% endif %}
+                        <td> {{row [4] }} </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+    </body>
+</html>
